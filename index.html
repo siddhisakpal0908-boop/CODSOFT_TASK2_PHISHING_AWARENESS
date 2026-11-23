@@ -1,0 +1,1269 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhishGuard | Phishing Awareness</title>
+
+<style>
+:root {
+    --bg: #0b0c2a;
+    --surface: #17183f;
+    --surface2: #25265c;
+    --violet: #4143a5;
+    --cyan: #22c8f5;
+    --purple: #a855f7;
+    --magenta: #e044d8;
+    --text: #f5f3ff;
+    --muted: #c3c3e5;
+    --border: rgba(166,146,255,.2);
+    --green: #67dfae;
+    --danger: #ff806f;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+}
+
+button, a {
+    font-family: inherit;
+}
+
+.progress-bar {
+    height: 4px;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    background: linear-gradient(90deg,var(--cyan),var(--magenta));
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 17px 7%;
+    background: rgba(11,12,42,.96);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(15px);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 23px;
+    font-weight: 800;
+    color: var(--cyan);
+}
+
+.brand-icon {
+    background: linear-gradient(135deg,#4143a5,#a855f7);
+    border-radius: 12px;
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    font-size: 23px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+    transition: .2s;
+}
+
+nav a:hover, nav a.active {
+    color: var(--cyan);
+}
+
+.menu-btn {
+    display: none;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.hero {
+    min-height: 550px;
+    padding: 90px 8%;
+    display: grid;
+    grid-template-columns: 1.3fr .7fr;
+    gap: 45px;
+    align-items: center;
+    background:
+        radial-gradient(circle at 80% 30%,rgba(65,67,165,.35),transparent 35%),
+        radial-gradient(circle at 20% 80%,rgba(34,200,245,.12),transparent 30%),
+        var(--bg);
+}
+
+.eyebrow {
+    display: inline-block;
+    color: var(--cyan);
+    background: rgba(34,200,245,.1);
+    border: 1px solid rgba(34,200,245,.25);
+    padding: 7px 14px;
+    border-radius: 30px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.hero h1 {
+    font-size: clamp(38px,5vw,64px);
+    line-height: 1.12;
+    letter-spacing: -2px;
+    margin: 22px 0;
+}
+
+.gradient-text {
+    background: linear-gradient(90deg,var(--cyan),var(--magenta));
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+}
+
+.hero p {
+    max-width: 570px;
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 28px;
+}
+
+.primary-btn, .secondary-btn {
+    display: inline-block;
+    padding: 13px 22px;
+    border-radius: 9px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: .25s;
+    font-size: 14px;
+}
+
+.primary-btn {
+    background: linear-gradient(100deg,var(--cyan),#6bdbf8);
+    color: #101334;
+}
+
+.primary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(34,200,245,.25);
+}
+
+.secondary-btn {
+    background: var(--surface2);
+    color: white;
+    border: 1px solid var(--border);
+    margin-left: 8px;
+}
+
+.secondary-btn:hover {
+    border-color: var(--magenta);
+}
+
+.hero-visual {
+    padding: 26px;
+    border: 1px solid rgba(85,226,237,.2);
+    border-radius: 22px;
+    background: linear-gradient(145deg,#20245a,#111631);
+    box-shadow: 0 20px 60px rgba(0,0,0,.3);
+}
+
+.visual-top {
+    display: flex;
+    justify-content: space-between;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.online {
+    color: var(--green);
+}
+
+.shield {
+    font-size: 76px;
+    text-align: center;
+    margin: 25px 0;
+    filter: drop-shadow(0 0 20px rgba(34,200,245,.35));
+}
+
+.hero-visual h3 {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.visual-caption {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.visual-line {
+    height: 8px;
+    background: #34345e;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 20px 0 10px;
+}
+
+.visual-line span {
+    display: block;
+    width: 85%;
+    height: 100%;
+    background: linear-gradient(90deg,var(--cyan),var(--magenta));
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 16px;
+    padding: 0 8% 50px;
+}
+
+.stat {
+    text-align: center;
+    padding: 19px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+}
+
+.stat strong {
+    display: block;
+    color: var(--cyan);
+    font-size: 25px;
+}
+
+.stat span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.section {
+    padding: 75px 8%;
+    scroll-margin-top: 85px;
+}
+
+.alt-bg {
+    background: #101132;
+}
+
+.section-heading {
+    max-width: 720px;
+    margin-bottom: 35px;
+}
+
+.section-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--cyan);
+}
+
+.section-heading h2 {
+    font-size: clamp(28px,4vw,39px);
+    margin: 8px 0;
+}
+
+.section-heading p {
+    color: var(--muted);
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 18px;
+}
+
+.card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background: linear-gradient(145deg,#25265c,#17183f);
+    border: 1px solid rgba(155,135,255,.25);
+    border-radius: 17px;
+    padding: 24px;
+    min-height: 190px;
+    transition: .3s;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    right: -35px;
+    top: -40px;
+    background: rgba(224,68,216,.12);
+    border-radius: 50%;
+    filter: blur(15px);
+    pointer-events: none;
+}
+
+.card:hover {
+    transform: translateY(-7px);
+    border-color: var(--cyan);
+    box-shadow: 0 12px 30px rgba(34,200,245,.14);
+}
+
+.card.is-selected {
+    border: 2px solid var(--magenta);
+    background: linear-gradient(145deg,#343477,#20204f);
+    box-shadow: 0 0 25px rgba(224,68,216,.2);
+}
+
+.card-icon {
+    width: 52px;
+    height: 52px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: linear-gradient(135deg,#4143a5,#8b3cc7);
+    font-size: 26px;
+    margin-bottom: 16px;
+}
+
+.card h3 {
+    color: #f3efff;
+    font-size: 17px;
+    margin-bottom: 9px;
+}
+
+.card p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.card .learn-more {
+    display: inline-block;
+    color: var(--cyan);
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 13px;
+}
+
+.card-detail {
+    display: none;
+    background: #202052;
+    border: 1px solid var(--magenta);
+    padding: 17px;
+    margin-top: 15px;
+    border-radius: 10px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.card.is-selected .card-detail {
+    display: block;
+}
+
+.card.is-selected .learn-more {
+    color: var(--magenta);
+}
+
+.content-box {
+    background: linear-gradient(145deg,#1c1e4c,#151638);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 27px;
+    margin-top: 22px;
+}
+
+.content-box h3 {
+    color: var(--cyan);
+    margin-bottom: 12px;
+}
+
+.content-box p, .content-box li {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.content-box ul, .content-box ol {
+    padding-left: 23px;
+}
+
+.content-box li {
+    margin: 5px 0;
+}
+
+.email-card {
+    background: #f5f7fb;
+    color: #18243a;
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.email-card p {
+    color: #29364a;
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+.email-warning {
+    background: #ffe8df;
+    border: 1px solid #ffc5b3;
+    color: #922f18;
+    border-radius: 9px;
+    padding: 17px;
+    margin-top: 18px;
+}
+
+.email-warning h4 {
+    color: #922f18;
+    margin-bottom: 8px;
+}
+
+.email-warning ul {
+    padding-left: 22px;
+}
+
+.email-warning li {
+    color: #922f18;
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.notice {
+    background: rgba(255,128,111,.1);
+    border-left: 4px solid var(--danger);
+    padding: 16px;
+    border-radius: 8px;
+    color: #ffd0c8;
+    font-size: 14px;
+    margin-top: 18px;
+}
+
+.success-note {
+    background: rgba(103,223,174,.1);
+    border-left: 4px solid var(--green);
+    padding: 16px;
+    border-radius: 8px;
+    color: #b8f5db;
+    margin-top: 18px;
+}
+
+.case-study {
+    background: linear-gradient(145deg,#24245b,#151638);
+    border: 1px solid rgba(168,85,247,.35);
+    border-radius: 17px;
+    padding: 28px;
+}
+
+.case-study h3 {
+    color: var(--purple);
+    margin-bottom: 14px;
+}
+
+.case-study p, .case-study li {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.case-study a, .references a {
+    color: var(--cyan);
+}
+
+.quiz-box {
+    max-width: 850px;
+    background: linear-gradient(145deg,#1c1e4c,#151638);
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    padding: 28px;
+}
+
+.quiz-question {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.quiz-question p {
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.quiz-question label {
+    display: block;
+    padding: 10px 13px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin: 8px 0;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 14px;
+    transition: .2s;
+}
+
+.quiz-question label:hover {
+    border-color: var(--cyan);
+    background: rgba(34,200,245,.06);
+    color: white;
+}
+
+.quiz-question input {
+    accent-color: var(--magenta);
+    margin-right: 8px;
+}
+
+#result {
+    margin-top: 22px;
+    line-height: 2;
+    font-size: 14px;
+}
+
+.references li {
+    margin: 12px 0;
+}
+
+footer {
+    padding: 40px 8%;
+    background: #07091e;
+    border-top: 1px solid var(--border);
+    text-align: center;
+}
+
+footer h2 {
+    color: var(--cyan);
+}
+
+footer p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 7px;
+}
+
+@media(max-width:1000px) {
+    .hero {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-visual {
+        max-width: 500px;
+    }
+
+    .card-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    nav {
+        gap: 12px;
+    }
+}
+
+@media(max-width:700px) {
+    header {
+        padding: 14px 5%;
+    }
+
+    .menu-btn {
+        display: block;
+    }
+
+    nav {
+        display: none;
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        background: #17183f;
+        padding: 20px;
+        flex-direction: column;
+        border-bottom: 1px solid var(--border);
+    }
+
+    nav.show {
+        display: flex;
+    }
+
+    .hero {
+        padding: 65px 6%;
+    }
+
+    .hero h1 {
+        letter-spacing: -1px;
+    }
+
+    .stats {
+        padding: 0 6% 35px;
+        grid-template-columns: 1fr;
+    }
+
+    .section {
+        padding: 55px 6%;
+    }
+
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .secondary-btn {
+        margin: 12px 0 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<header>
+    <div class="brand">
+        <div class="brand-icon">🛡️</div>
+        PhishGuard
+    </div>
+
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+    <nav id="navigation">
+        <a href="#learn">Learn</a>
+        <a href="#types">Attack Types</a>
+        <a href="#identify">Identify</a>
+        <a href="#social">Social Engineering</a>
+        <a href="#case">Case Study</a>
+        <a href="#protect">Protection</a>
+        <a href="#quiz">Quiz</a>
+    </nav>
+</header>
+
+<!-- HERO -->
+
+<section class="hero">
+    <div>
+        <span class="eyebrow">CYBERSECURITY AWARENESS PROGRAM</span>
+
+        <h1>
+            Think Before You Click.<br>
+            <span class="gradient-text">Stay One Step Ahead.</span>
+        </h1>
+
+        <p>
+            Explore how phishing attacks work, identify
+            suspicious messages and develop safer digital
+            habits with PhishGuard.
+        </p>
+
+        <a class="primary-btn" href="#learn">Start Learning →</a>
+        <a class="secondary-btn" href="#quiz">Take the Quiz</a>
+    </div>
+
+    <div class="hero-visual">
+        <div class="visual-top">
+            <span>SECURITY AWARENESS</span>
+            <span class="online">● ACTIVE</span>
+        </div>
+
+        <div class="shield">🛡️</div>
+
+        <h3>Stay One Step Ahead</h3>
+        <p class="visual-caption">Recognize. Verify. Protect.</p>
+
+        <div class="visual-line"><span></span></div>
+        <p class="visual-caption">Awareness is your first line of defence.</p>
+    </div>
+</section>
+
+<div class="stats">
+    <div class="stat">
+        <strong>06</strong>
+        <span>Phishing attack types</span>
+    </div>
+    <div class="stat">
+        <strong>06</strong>
+        <span>Social engineering techniques</span>
+    </div>
+    <div class="stat">
+        <strong>05</strong>
+        <span>Knowledge quiz questions</span>
+    </div>
+</div>
+
+<!-- INTRODUCTION -->
+
+<section class="section" id="learn">
+    <div class="section-heading">
+        <span class="section-label">01 / UNDERSTAND</span>
+        <h2>What is Phishing?</h2>
+        <p>Understand the threat before learning how to defend against it.</p>
+    </div>
+
+    <div class="content-box">
+        <p>
+            Phishing is a cyber attack in which criminals
+            impersonate trusted people or organizations to
+            trick users into revealing sensitive information,
+            clicking harmful links or downloading malicious files.
+        </p>
+
+        <h3 style="margin-top:22px">Why do attackers use phishing?</h3>
+        <ul>
+            <li>Steal usernames and passwords.</li>
+            <li>Obtain banking and financial information.</li>
+            <li>Gain unauthorized access to accounts.</li>
+            <li>Commit identity theft and financial fraud.</li>
+            <li>Access confidential organizational information.</li>
+        </ul>
+    </div>
+</section>
+
+<!-- PHISHING TYPES -->
+
+<section class="section alt-bg" id="types">
+    <div class="section-heading">
+        <span class="section-label">02 / RECOGNIZE</span>
+        <h2>Types of Phishing Attacks</h2>
+        <p>Explore the common techniques used by cybercriminals. Click a card to learn more.</p>
+    </div>
+
+    <div class="card-grid">
+
+        <div class="card">
+            <div class="card-icon">📧</div>
+            <h3>Email Phishing</h3>
+            <p>Fraudulent emails that pretend to come from trusted organizations.</p>
+            <span class="learn-more">Explore details ↓</span>
+            <div class="card-detail">
+                Attackers may imitate banks, online services or employers to trick users into revealing passwords or financial information.
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🎯</div>
+            <h3>Spear Phishing</h3>
+            <p>A targeted phishing attack designed for a specific person or organization.</p>
+            <span class="learn-more">Explore details ↓</span>
+            <div class="card-detail">
+                Messages may use personal or workplace information to appear believable and relevant to the recipient.
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">👔</div>
+            <h3>Whaling</h3>
+            <p>A targeted attack focused on senior executives or important individuals.</p>
+            <span class="learn-more">Explore details ↓</span>
+            <div class="card-detail">
+                Attackers may impersonate business partners or senior staff to manipulate high-value business transactions.
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">📱</div>
+            <h3>Smishing</h3>
+            <p>Phishing attacks delivered through SMS or text messages.</p>
+            <span class="learn-more">Explore details ↓</span>
+            <div class="card-detail">
+                Messages may claim that a delivery, bank account or service needs immediate attention.
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">☎️</div>
+            <h3>Vishing</h3>
+            <p>Voice phishing using phone calls to impersonate trusted people.</p>
+            <span class="learn-more">Explore details ↓</span>
+            <div class="card-detail">
+                Callers may pretend to be bank staff or technical support and request confidential information.
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🔄</div>
+            <h3>Clone Phishing</h3>
+            <p>A fake copy of a legitimate message with a modified link or attachment.</p>
+            <span class="learn-more">Explore details ↓</span>
+            <div class="card-detail">
+                The message may look familiar, but the replacement link or attachment can lead to a fraudulent destination.
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- IDENTIFICATION -->
+
+<section class="section" id="identify">
+    <div class="section-heading">
+        <span class="section-label">03 / INVESTIGATE</span>
+        <h2>How to Identify Phishing</h2>
+        <p>Learn to recognize suspicious messages, fake login pages and fraudulent websites.</p>
+    </div>
+
+    <div class="card-grid">
+        <div class="card">
+            <div class="card-icon">📨</div>
+            <h3>Suspicious Sender</h3>
+            <p>Look for unknown addresses, misspellings and domains that imitate genuine organizations.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">⏰</div>
+            <h3>Urgent Messages</h3>
+            <p>Be cautious of messages threatening account closure or demanding immediate action.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🔗</div>
+            <h3>Unexpected Links</h3>
+            <p>Check the actual destination of a link before opening it. Avoid unexpected attachments.</p>
+        </div>
+    </div>
+
+    <div class="content-box">
+        <h3>Example: Analyze a Suspicious Email</h3>
+
+        <div class="email-card">
+            <p><strong>From:</strong> Account Support</p>
+            <p><strong>Subject:</strong> URGENT! Your account will be blocked.</p>
+
+            <hr style="margin:15px 0;border:0;border-top:1px solid #d5dce5">
+
+            <p>Dear Customer,</p>
+            <p>
+                We detected unusual activity in your account.
+                Verify your password and OTP immediately to
+                prevent account suspension.
+            </p>
+            <p>Click here: account-check.example.invalid</p>
+
+            <div class="email-warning">
+                <h4>⚠ Warning Signs</h4>
+                <ul>
+                    <li>Creates fear and urgency.</li>
+                    <li>Requests sensitive information.</li>
+                    <li>Uses an unverified address.</li>
+                    <li>Uses a generic greeting.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="notice">
+            This is a fictional training example. Never enter real
+            passwords, banking details or OTPs into unverified pages.
+        </div>
+    </div>
+
+    <div class="content-box">
+        <h3>How to Identify Fake Login Pages</h3>
+        <ul>
+            <li>Check the exact website domain.</li>
+            <li>Look for spelling mistakes or extra characters in URLs.</li>
+            <li>Be careful with unexpected login requests.</li>
+            <li>Never enter credentials through unknown links.</li>
+            <li>Use official apps or saved bookmarks to visit important services.</li>
+        </ul>
+
+        <h3 style="margin-top:24px">How to Identify Fraudulent Websites</h3>
+        <ul>
+            <li>Unusual domain names.</li>
+            <li>Unexpected redirects and pop-ups.</li>
+            <li>Unusual payment or personal information requests.</li>
+            <li>Offers that seem too good to be true.</li>
+        </ul>
+
+        <div class="notice">
+            HTTPS and a padlock do not guarantee that a website is genuine.
+            Always verify the exact domain and organization.
+        </div>
+    </div>
+</section>
+
+<!-- SOCIAL ENGINEERING -->
+
+<section class="section alt-bg" id="social">
+    <div class="section-heading">
+        <span class="section-label">04 / UNDERSTAND THE TRICKS</span>
+        <h2>Social Engineering Techniques</h2>
+        <p>Attackers often manipulate emotions and trust instead of exploiting technology alone.</p>
+    </div>
+
+    <div class="card-grid">
+        <div class="card">
+            <div class="card-icon">🏢</div>
+            <h3>Authority</h3>
+            <p>Pretending to be a manager, bank employee or government official.</p>
+            <span class="learn-more">Click to explore ↓</span>
+            <div class="card-detail">Verify unusual requests through a separate trusted communication channel.</div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">⚡</div>
+            <h3>Urgency</h3>
+            <p>Creating pressure by saying immediate action is required.</p>
+            <span class="learn-more">Click to explore ↓</span>
+            <div class="card-detail">Pause and independently verify any message that pressures you to act immediately.</div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🎭</div>
+            <h3>Pretexting</h3>
+            <p>Creating a false story to obtain confidential information.</p>
+            <span class="learn-more">Click to explore ↓</span>
+            <div class="card-detail">Do not disclose private information just because someone provides a convincing story.</div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🎁</div>
+            <h3>Baiting</h3>
+            <p>Offering something attractive to trick a user.</p>
+            <span class="learn-more">Click to explore ↓</span>
+            <div class="card-detail">Be careful with unexpected prizes, free downloads and unknown devices.</div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">👤</div>
+            <h3>Impersonation</h3>
+            <p>Pretending to be someone the victim knows or trusts.</p>
+            <span class="learn-more">Click to explore ↓</span>
+            <div class="card-detail">Confirm unexpected requests directly with the real person or organization.</div>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🔍</div>
+            <h3>Curiosity</h3>
+            <p>Using tempting information to encourage users to open a link or attachment.</p>
+            <span class="learn-more">Click to explore ↓</span>
+            <div class="card-detail">Avoid opening unexpected attachments, even when the subject looks interesting.</div>
+        </div>
+    </div>
+</section>
+
+<!-- CASE STUDY -->
+
+<section class="section" id="case">
+    <div class="section-heading">
+        <span class="section-label">05 / REAL WORLD</span>
+        <h2>Real-Life Case Study</h2>
+        <p>Learn how business email fraud can cause serious financial damage.</p>
+    </div>
+
+    <div class="case-study">
+        <h3>Business Email Compromise – Evaldas Rimasauskas Case</h3>
+
+        <p>
+            Evaldas Rimasauskas used a company name resembling
+            that of a legitimate hardware supplier to send
+            fraudulent business emails to employees of two
+            multinational technology companies.
+        </p>
+
+        <p style="margin-top:15px">
+            The emails directed payments to bank accounts
+            controlled by the criminal. The U.S. Department
+            of Justice reported that the scheme involved more
+            than $100 million in fraudulent transfers.
+            Rimasauskas pleaded guilty in 2019.
+        </p>
+
+        <h3 style="margin-top:22px">Lessons Learned</h3>
+        <ul>
+            <li>Verify payment requests independently.</li>
+            <li>Check supplier details carefully.</li>
+            <li>Do not trust an email only because its name looks familiar.</li>
+            <li>Use multiple approval steps for large payments.</li>
+            <li>Report suspicious financial instructions.</li>
+        </ul>
+
+        <p style="margin-top:20px">
+            Source:
+            <a href="https://www.justice.gov/usao-sdny/pr/lithuanian-man-pleads-guilty-wire-fraud-theft-over-100-million-fraudulent-business"
+            target="_blank" rel="noopener">U.S. Department of Justice</a>
+        </p>
+    </div>
+</section>
+
+<!-- PROTECTION -->
+
+<section class="section alt-bg" id="protect">
+    <div class="section-heading">
+        <span class="section-label">06 / STAY SAFE</span>
+        <h2>Practical Security Tips</h2>
+        <p>Build safe digital habits and reduce your risk of phishing.</p>
+    </div>
+
+    <div class="card-grid">
+        <div class="card">
+            <div class="card-icon">🔐</div>
+            <h3>Strong Passwords</h3>
+            <p>Use strong, unique passwords for different accounts.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🛡️</div>
+            <h3>Enable MFA</h3>
+            <p>Use multi-factor authentication to add another layer of security.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🔎</div>
+            <h3>Verify First</h3>
+            <p>Check unexpected messages through an official communication channel.</p>
+        </div>
+    </div>
+
+    <div class="content-box">
+        <h3>What to Do If You Click a Phishing Link</h3>
+        <ol>
+            <li>Stop interacting with the suspicious page.</li>
+            <li>Do not enter additional information.</li>
+            <li>If you shared a password, change it from a trusted device.</li>
+            <li>Contact your bank if financial information was shared.</li>
+            <li>Enable MFA and review account activity.</li>
+            <li>Report the incident to the relevant organization.</li>
+        </ol>
+
+        <div class="success-note">
+            Remember: Pause, inspect and verify before clicking an unexpected link.
+        </div>
+    </div>
+</section>
+
+<!-- QUIZ -->
+
+<section class="section" id="quiz">
+    <div class="section-heading">
+        <span class="section-label">07 / TEST YOUR KNOWLEDGE</span>
+        <h2>Phishing Awareness Quiz</h2>
+        <p>Answer all five questions and check your knowledge.</p>
+    </div>
+
+    <div class="quiz-box">
+        <form id="quizForm">
+
+            <div class="quiz-question">
+                <p>1. What is phishing?</p>
+                <label><input type="radio" name="q1" value="a"> A programming language</label>
+                <label><input type="radio" name="q1" value="b"> A technique used to trick people into revealing information</label>
+                <label><input type="radio" name="q1" value="c"> A type of computer hardware</label>
+            </div>
+
+            <div class="quiz-question">
+                <p>2. What is Smishing?</p>
+                <label><input type="radio" name="q2" value="a"> Phishing through SMS messages</label>
+                <label><input type="radio" name="q2" value="b"> Phishing through phone calls</label>
+                <label><input type="radio" name="q2" value="c"> A computer virus</label>
+            </div>
+
+            <div class="quiz-question">
+                <p>3. What should you do with a suspicious email link?</p>
+                <label><input type="radio" name="q3" value="a"> Click it immediately</label>
+                <label><input type="radio" name="q3" value="b"> Forward it to everyone</label>
+                <label><input type="radio" name="q3" value="c"> Avoid clicking and verify the sender</label>
+            </div>
+
+            <div class="quiz-question">
+                <p>4. What does MFA stand for?</p>
+                <label><input type="radio" name="q4" value="a"> Multiple File Access</label>
+                <label><input type="radio" name="q4" value="b"> Multi-Factor Authentication</label>
+                <label><input type="radio" name="q4" value="c"> Main Firewall Application</label>
+            </div>
+
+            <div class="quiz-question">
+                <p>5. What is Spear Phishing?</p>
+                <label><input type="radio" name="q5" value="a"> A targeted phishing attack</label>
+                <label><input type="radio" name="q5" value="b"> A safe email service</label>
+                <label><input type="radio" name="q5" value="c"> A security update</label>
+            </div>
+
+            <button class="primary-btn" type="submit">Submit Answers →</button>
+            <button class="secondary-btn" type="reset">Try Again</button>
+        </form>
+
+        <div id="result" aria-live="polite"></div>
+    </div>
+</section>
+
+<!-- REFERENCES -->
+
+<section class="section alt-bg references" id="references">
+    <div class="section-heading">
+        <span class="section-label">08 / LEARN MORE</span>
+        <h2>References & Further Learning</h2>
+        <p>Explore these resources to improve your cybersecurity awareness.</p>
+    </div>
+
+    <div class="content-box">
+        <ul>
+            <li><a href="https://www.cisa.gov/" target="_blank" rel="noopener">CISA – Cybersecurity and Infrastructure Security Agency</a></li>
+            <li><a href="https://consumer.ftc.gov/" target="_blank" rel="noopener">FTC – Consumer Advice</a></li>
+            <li><a href="https://www.fbi.gov/" target="_blank" rel="noopener">FBI – Federal Bureau of Investigation</a></li>
+            <li><a href="https://www.cybrary.it/course/phishing" target="_blank" rel="noopener">Cybrary – Phishing Course</a></li>
+        </ul>
+    </div>
+</section>
+
+<footer>
+    <h2>🛡️ PhishGuard</h2>
+    <p>Think Before You Click. Stay Safe Online.</p>
+    <p>CodSoft Cyber Security Internship – Task 2</p>
+    <p>Educational project created for cybersecurity awareness.</p>
+</footer>
+
+<script>
+
+// MOBILE MENU
+
+function toggleMenu() {
+    document.getElementById("navigation").classList.toggle("show");
+}
+
+document.querySelectorAll("#navigation a").forEach(link => {
+    link.addEventListener("click", () => {
+        document.getElementById("navigation").classList.remove("show");
+    });
+});
+
+// SCROLL PROGRESS
+
+window.addEventListener("scroll", function() {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight -
+                         document.documentElement.clientHeight;
+
+    const progress = scrollHeight > 0
+        ? (scrollTop / scrollHeight) * 100
+        : 0;
+
+    document.getElementById("progressBar").style.width =
+        progress + "%";
+});
+
+// INTERACTIVE LEARNING CARDS
+
+document.querySelectorAll(".card").forEach(card => {
+    card.setAttribute("tabindex", "0");
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-pressed", "false");
+
+    function toggleCard() {
+        const selected = card.classList.toggle("is-selected");
+        card.setAttribute("aria-pressed", String(selected));
+    }
+
+    card.addEventListener("click", toggleCard);
+
+    card.addEventListener("keydown", function(event) {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            toggleCard();
+        }
+    });
+});
+
+// QUIZ
+
+const answers = {
+    q1: "b",
+    q2: "a",
+    q3: "c",
+    q4: "b",
+    q5: "a"
+};
+
+const explanations = {
+    q1: "Phishing tricks people into revealing sensitive information.",
+    q2: "Smishing means phishing through SMS messages.",
+    q3: "Avoid suspicious links and independently verify the sender.",
+    q4: "MFA means Multi-Factor Authentication.",
+    q5: "Spear phishing targets a particular person or organization."
+};
+
+document.getElementById("quizForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    let score = 0;
+    let feedback = "";
+
+    for (let question in answers) {
+        const selected = document.querySelector(
+            'input[name="' + question + '"]:checked'
+        );
+
+        if (!selected) {
+            const result = document.getElementById("result");
+            result.style.color = "#ffd166";
+            result.innerHTML = "Please answer all five questions before submitting.";
+            return;
+        }
+
+        if (selected.value === answers[question]) {
+            score++;
+            feedback += "<p style='color:#67dfae'>✓ " +
+                explanations[question] + "</p>";
+        } else {
+            feedback += "<p style='color:#ffad9f'>✗ " +
+                explanations[question] + "</p>";
+        }
+    }
+
+    const result = document.getElementById("result");
+
+    result.style.color = score >= 3 ? "#67dfae" : "#ffad9f";
+
+    result.innerHTML =
+        "<h3>Your Score: " + score + " / 5</h3>" +
+        "<p>" + (score === 5
+            ? "Excellent! You understand phishing awareness very well."
+            : "Good effort! Review the explanations and try again.") +
+        "</p>" + feedback;
+});
+
+document.getElementById("quizForm").addEventListener("reset", function() {
+    document.getElementById("result").innerHTML = "";
+});
+
+// NAVIGATION ACTIVE STATE
+
+const sections = document.querySelectorAll("section[id]");
+const navLinks = document.querySelectorAll("#navigation a");
+
+window.addEventListener("scroll", function() {
+    let current = "";
+
+    sections.forEach(section => {
+        if (window.scrollY >= section.offsetTop - 150) {
+            current = section.id;
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.classList.toggle(
+            "active",
+            link.getAttribute("href") === "#" + current
+        );
+    });
+});
+
+</script>
+
+</body>
+</html>
